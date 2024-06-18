@@ -12,7 +12,6 @@ export default async function login(req: Request, res: Response) {
   const { email, password } = req.body;
   let errors: LoginErrors = {};
 
-  // Validate email and password presence and format
   if (!email || !emailValidator(email)) {
     errors.email = "Valid email is required!";
   }
@@ -20,7 +19,6 @@ export default async function login(req: Request, res: Response) {
     errors.password = "Password must be at least 6 characters long!";
   }
 
-  // If there are validation errors, return 400 with errors object
   if (Object.keys(errors).length > 0) {
     return res.status(400).json(errors);
   }
