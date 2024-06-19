@@ -24,5 +24,5 @@ const UserSchema: Schema = new Schema<UserDocument>({
     default: UserRole.STUDENT,
   },
 });
-const User =model<UserDocument>('User',UserSchema);
+const User =model<UserDocument>('User',UserSchema,'Users');
 export default User;

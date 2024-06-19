@@ -1,3 +1,5 @@
+import Instructor from "../models/Instructor";
+import Student from "../models/Student";
 import User from "../models/User";
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -28,7 +30,17 @@ export async function createUser(userData: UserData) {
       password: hashedPassword,
       role,
     });
-
+    if (role === "instructor") {
+      await Instructor.create({
+        userId: newUser._id,
+        bio: "Hello World this is berlin here",
+        expertise: "Spanish",
+      });
+    } else if (role === "student") {
+      await Student.create({
+        userId: newUser._id,
+      });
+    }
     return newUser;
   } catch (error) {
     console.error("Error creating user:", error);
