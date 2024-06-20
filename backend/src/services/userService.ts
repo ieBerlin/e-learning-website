@@ -11,6 +11,15 @@ export interface UserData {
   password: string;
   role: string;
 }
+export async function doesUserExist(email: string): Promise<boolean> {
+  try {
+    const user = await User.findOne({ email });
+    return !!user;
+  } catch (error) {
+    console.error("Error checking user existence:", error);
+    return false;
+  }
+}
 
 export async function createUser(userData: UserData) {
   const {
@@ -30,17 +39,21 @@ export async function createUser(userData: UserData) {
       password: hashedPassword,
       role,
     });
-    if (role === "instructor") {
-      await Instructor.create({
-        userId: newUser._id,
-        bio: "Hello World this is berlin here",
-        expertise: "Spanish",
-      });
-    } else if (role === "student") {
-      await Student.create({
-        userId: newUser._id,
-      });
+    switch (role) {
+      case "instructor":
+        await Instructor.create({
+          userId: newUser._id,
+          bio: "Hello World this is berlin here",
+          expertise: "Spanish",
+        });
+        break;
+      case "student":
+        await Student.create({
+          userId: newUser._id,
+        });
+        break;
     }
+
     return newUser;
   } catch (error) {
     console.error("Error creating user:", error);

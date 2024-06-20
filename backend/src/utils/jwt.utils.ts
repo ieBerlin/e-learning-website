@@ -1,5 +1,6 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
-
+import dotenv from "dotenv";
+dotenv.config();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 if (!JWT_SECRET_KEY) {
   throw new Error("JWT_SECRET_KEY is not defined in environment variables");
@@ -10,8 +11,7 @@ interface VerificationToken {
   isExpired: boolean | string;
   decoded: JwtPayload | null;
 }
-
-export async function verifyJwt(token: string): Promise<VerificationToken> {
+export function verifyJwt(token: string): VerificationToken {
   if (!token) {
     return {
       isValid: false,
@@ -19,7 +19,6 @@ export async function verifyJwt(token: string): Promise<VerificationToken> {
       decoded: null,
     };
   }
-
   try {
     const decoded = jwt.verify(token, JWT_SECRET_KEY) as JwtPayload;
     return {
@@ -51,7 +50,7 @@ export function signJwt(email: string): string {
     },
     JWT_SECRET_KEY,
     {
-      expiresIn: "1h",
+      expiresIn: 24000,
     }
   );
 }

@@ -5,7 +5,11 @@ import {
   passwordValidator,
   roleValidator,
 } from "../../utils/validators";
-import { createUser, UserData } from "../../services/userService";
+import {
+  createUser,
+  doesUserExist,
+  UserData,
+} from "../../services/userService";
 interface errorsInterface {
   firstName?: String;
   lastName?: String;
@@ -34,10 +38,15 @@ export default async function signup(req: Request, res: Response) {
   }
 
   if (Object.keys(errors).length > 0) {
-    return res.status(400).json(errors);
+    return res.status(400).json({ success: false, errors });
   }
 
   try {
+    if (await doesUserExist(email)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User already exists" });
+    }
     await createUser({
       firstName,
       lastName,
@@ -50,6 +59,8 @@ export default async function signup(req: Request, res: Response) {
       .json({ success: true, message: "User Created Successfully!" });
   } catch (error) {
     console.error("Error creating user:", error);
-    return res.status(500).json({ message: "Failed to create user" });
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to create user" });
   }
 }

@@ -6,11 +6,12 @@ enum UserRole {
   GUARDIAN = "guardian",
 }
 interface UserDocument extends Document {
-  firstName :String ; 
-  lastName :String ; 
-  email :String ; 
-  password :String ; 
-  role :UserRole ; 
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  role: UserRole;
+  image: string;
 }
 const UserSchema: Schema = new Schema<UserDocument>({
   firstName: { required: true, type: String },
@@ -23,6 +24,7 @@ const UserSchema: Schema = new Schema<UserDocument>({
     enum: Object.values(UserRole),
     default: UserRole.STUDENT,
   },
+  image: { type: String, default: "" },
 });
-const User =model<UserDocument>('User',UserSchema,'Users');
+const User = model<UserDocument>("User", UserSchema, "Users");
 export default User;
