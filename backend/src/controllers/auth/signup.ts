@@ -16,10 +16,23 @@ interface errorsInterface {
   email?: String;
   password?: String;
   role?: String;
+  bio?: string;
+  expertise?: string;
 }
 
 export default async function signup(req: Request, res: Response) {
-  const { firstName, lastName, email, password, role }: UserData = req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    role,
+    bio,
+    expertise,
+    selectedLanguages,
+    proficiencyLevel,
+    learningInterests,
+  }: UserData = req.body;
   let errors: errorsInterface = {};
   if (!firstName || !nameValidator(firstName)) {
     errors.firstName = "Invalid first name";
@@ -36,7 +49,12 @@ export default async function signup(req: Request, res: Response) {
   if (!role || !roleValidator(role)) {
     errors.role = "Invalid role";
   }
-
+  if (role === "instructor" && !bio) {
+    errors.bio = "Invalid bio";
+  }
+  if (role === "instructor" && !expertise) {
+    errors.expertise = "Invalid expertise";
+  }
   if (Object.keys(errors).length > 0) {
     return res.status(400).json({ success: false, errors });
   }
@@ -47,12 +65,18 @@ export default async function signup(req: Request, res: Response) {
         .status(400)
         .json({ success: false, message: "User already exists" });
     }
+
     await createUser({
       firstName,
       lastName,
       email,
       password,
       role,
+      bio,
+      expertise,
+      selectedLanguages,
+      proficiencyLevel,
+      learningInterests,
     });
     return res
       .status(201)

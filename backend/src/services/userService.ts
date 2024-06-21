@@ -1,6 +1,7 @@
 import Instructor from "../models/Instructor";
 import Student from "../models/Student";
 import User from "../models/User";
+import { Response } from "express";
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -10,6 +11,12 @@ export interface UserData {
   email: string;
   password: string;
   role: string;
+  bio?: string;
+  expertise?: string;
+  courses?: string[];
+  selectedLanguages?: string[];
+  proficiencyLevel?: string;
+  learningInterests?: string[];
 }
 export async function doesUserExist(email: string): Promise<boolean> {
   try {
@@ -28,6 +35,11 @@ export async function createUser(userData: UserData) {
     email,
     password: plaintextPassword,
     role,
+    bio,
+    expertise,
+    selectedLanguages,
+    proficiencyLevel,
+    learningInterests,
   } = userData;
 
   try {
@@ -41,15 +53,13 @@ export async function createUser(userData: UserData) {
     });
     switch (role) {
       case "instructor":
-        await Instructor.create({
-          userId: newUser._id,
-          bio: "Hello World this is berlin here",
-          expertise: "Spanish",
-        });
-        break;
+        await Instructor.create({ bio, expertise, userId: newUser._id });
       case "student":
         await Student.create({
           userId: newUser._id,
+          selectedLanguages,
+          proficiencyLevel,
+          learningInterests,
         });
         break;
     }

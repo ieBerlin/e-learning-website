@@ -1,4 +1,4 @@
-import { Document, model, Schema } from "mongoose";
+import { Document, model, Schema, Types } from "mongoose";
 enum UserRole {
   STUDENT = "student",
   INSTRUCTOR = "instructor",
