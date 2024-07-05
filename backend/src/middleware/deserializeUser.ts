@@ -8,14 +8,14 @@ const deserializeUser = async (
 ) => {
   const accessToken =
     // req.headers.authorization ||
-    req.headers["x-access-token"] as string 
+    req.headers["x-access-token"] as string;
   // .replace(/^Bearer\s/, "").trim();
   if (!accessToken) {
     return res
       .status(403)
       .json({ success: false, message: "Unauthorized User!" });
   }
-  const { decoded, isValid, isExpired } = verifyJwt(accessToken);
+  const { decoded, isValid, isExpired } =await verifyJwt(accessToken);
   if (!isValid || isExpired) {
     return res
       .status(403)
@@ -23,7 +23,7 @@ const deserializeUser = async (
   }
 
   res.locals.user = decoded;
-  return next();
+  next();
 };
 
 export default deserializeUser;

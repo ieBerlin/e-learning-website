@@ -9,7 +9,12 @@ export interface InstructorDocument extends Document {
 }
 const InstructorSchema: Schema<InstructorDocument> =
   new Schema<InstructorDocument>({
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      unique: true,
+    },
     courses: { type: [String], required: true, default: [] },
     ratings: { type: Map, required: true, default: {} },
     bio: { type: String, required: true, default: "" },

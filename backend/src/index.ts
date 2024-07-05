@@ -1,2 +1,2 @@
-import connectDB from "./models/config";
+import connectDB from "./config/config";
 connectDB();

@@ -20,8 +20,11 @@ export const passwordValidator = (password: string): boolean => {
     passwordPattern.test(password)
   );
 };
-
+export const phoneNumberValidatorForGuardian = (phoneNumber: number): boolean => {
+  const regex = /^(?:\+213|0)(5|6|7)([0-9]{8})$/;
+  return regex.test(phoneNumber.toString());
+};
 export const roleValidator = (role: string): boolean => {
-  const validRoles = ["student", "instructor", "parent", "guardian"];
+  const validRoles = ["student", "instructor", "guardian"];
   return validRoles.includes(role);
 };

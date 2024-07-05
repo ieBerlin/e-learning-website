@@ -9,9 +9,9 @@ import getAllEnrollments from "../controllers/enrollment/getAllEnrollments";
 
 const router = Router();
 
-router.post("/", createEnrollment);
 router.get("/", getAllEnrollments);
 router.get("/:enrollmentId", getEnrollmentById);
+router.post("/", createEnrollment);
 router.put("/:enrollmentId", updateEnrollment);
 router.delete("/:enrollmentId", deleteEnrollment);
 

@@ -1,4 +1,5 @@
 import { Express, Request, Response } from "express";
+import adminRouter from './routes/admin.route'
 import usersRouter from "./routes/users.route";
 import coursesRouter from "./routes/courses.route";
 import instructorsRouter from "./routes/instructors.route";
@@ -7,6 +8,7 @@ import EnrollmentRouter from "./routes/enrollments.route";
 import reviewRouter from "./routes/review.route";
 
 export default function Routes(app: Express) {
+  app.use('/api/admin',adminRouter)
   app.use("/api/users", usersRouter);
   app.use("/api/courses", coursesRouter);
   app.use("/api/instructors", instructorsRouter);

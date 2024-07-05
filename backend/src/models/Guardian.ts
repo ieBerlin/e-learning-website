@@ -1,7 +1,10 @@
 import { Document, model, Schema } from "mongoose";
 
-export interface IStudent extends Document {
-  userId: Document & { _id: string };
+export interface IGuardian extends Document {
+  userId: Schema.Types.ObjectId;
+  phoneNumber: string;
+  relationship: string;
+  contactedEmail: string;
   enrolledCourses: string[];
   progress: Map<string, number>;
   certificates: string[];
@@ -12,13 +15,16 @@ export interface IStudent extends Document {
   updatedAt: Date;
 }
 
-const StudentSchema: Schema<IStudent> = new Schema<IStudent>({
+const GuardianSchema: Schema<IGuardian> = new Schema<IGuardian>({
   userId: {
     type: Schema.Types.ObjectId,
     ref: "User",
     unique: true,
     required: true,
   },
+  phoneNumber: { type: String },
+  relationship: { type: String },
+  contactedEmail: { type: String },
   enrolledCourses: { type: [String], required: true, default: [] },
   progress: { type: Map, required: true, default: {} },
   certificates: { type: [String], required: true, default: [] },
@@ -28,4 +34,5 @@ const StudentSchema: Schema<IStudent> = new Schema<IStudent>({
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
-export default model<IStudent>("Student", StudentSchema, "Students");
+
+export default model<IGuardian>("Guardian", GuardianSchema, "Guardians");

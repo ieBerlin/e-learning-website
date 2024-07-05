@@ -1,5 +1,6 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
+import User from "../models/User";
 dotenv.config();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 if (!JWT_SECRET_KEY) {
@@ -11,7 +12,7 @@ interface VerificationToken {
   isExpired: boolean | string;
   decoded: JwtPayload | null;
 }
-export function verifyJwt(token: string): VerificationToken {
+export async function verifyJwt(token: string): Promise<VerificationToken> {
   if (!token) {
     return {
       isValid: false,
@@ -21,10 +22,15 @@ export function verifyJwt(token: string): VerificationToken {
   }
   try {
     const decoded = jwt.verify(token, JWT_SECRET_KEY) as JwtPayload;
+    const result = await User.findOne({ email: decoded.email });
+    const userData = {
+      email: decoded.email,
+      userId: result._id,
+    };
     return {
       isValid: true,
       isExpired: false,
-      decoded,
+      decoded: userData,
     };
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {

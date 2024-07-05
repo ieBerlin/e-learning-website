@@ -4,21 +4,14 @@ import {
   emailValidator,
   passwordValidator,
   roleValidator,
+  phoneNumberValidatorForGuardian,
 } from "../../utils/validators";
 import {
   createUser,
   doesUserExist,
   UserData,
 } from "../../services/userService";
-interface errorsInterface {
-  firstName?: String;
-  lastName?: String;
-  email?: String;
-  password?: String;
-  role?: String;
-  bio?: string;
-  expertise?: string;
-}
+import ValidationError from "../../utils/ValidationError";
 
 export default async function signup(req: Request, res: Response) {
   const {
@@ -32,38 +25,78 @@ export default async function signup(req: Request, res: Response) {
     selectedLanguages,
     proficiencyLevel,
     learningInterests,
+    phoneNumber,
+    relationship,
+    contactedEmail,
   }: UserData = req.body;
-  let errors: errorsInterface = {};
-  if (!firstName || !nameValidator(firstName)) {
-    errors.firstName = "Invalid first name";
-  }
-  if (!lastName || !nameValidator(lastName)) {
-    errors.lastName = "Invalid last name";
-  }
-  if (!email || !emailValidator(email)) {
-    errors.email = "Invalid email";
-  }
-  if (!password || !passwordValidator(password)) {
-    errors.password = "Invalid password";
-  }
-  if (!role || !roleValidator(role)) {
-    errors.role = "Invalid role";
-  }
-  if (role === "instructor" && !bio) {
-    errors.bio = "Invalid bio";
-  }
-  if (role === "instructor" && !expertise) {
-    errors.expertise = "Invalid expertise";
-  }
-  if (Object.keys(errors).length > 0) {
-    return res.status(400).json({ success: false, errors });
-  }
-
+  const errors: ValidationError[] = [];
   try {
+    if (!email || typeof email !== "string" || !emailValidator(email)) {
+      errors.push({ field: "email", message: "Invalid email" });
+    }
     if (await doesUserExist(email)) {
       return res
         .status(400)
         .json({ success: false, message: "User already exists" });
+    }
+
+    if (
+      !firstName ||
+      typeof firstName !== "string" ||
+      !nameValidator(firstName)
+    ) {
+      errors.push({ field: "firstName", message: "Invalid first name" });
+    }
+
+    if (!lastName || typeof lastName !== "string" || !nameValidator(lastName)) {
+      errors.push({ field: "lastName", message: "Invalid last name" });
+    }
+
+    if (
+      !password ||
+      typeof password !== "string" ||
+      !passwordValidator(password)
+    ) {
+      errors.push({ field: "password", message: "Invalid password" });
+    }
+
+    if (!role || typeof role !== "string" || !roleValidator(role)) {
+      errors.push({ field: "role", message: "Invalid role" });
+    }
+
+    if (role === "instructor") {
+      if (!bio || typeof bio !== "string") {
+        errors.push({ field: "bio", message: "Invalid bio" });
+      }
+      if (!expertise || typeof expertise !== "string") {
+        errors.push({ field: "expertise", message: "Invalid expertise" });
+      }
+    }
+
+    if (role === "guardian") {
+      if (
+        !phoneNumber ||
+        typeof phoneNumber !== "string" ||
+        !phoneNumberValidatorForGuardian(phoneNumber)
+      ) {
+        errors.push({ field: "phoneNumber", message: "Invalid phone number" });
+      }
+    }
+    if (!relationship || typeof relationship !== "string") {
+      errors.push({ field: "relationship", message: "Invalid relationship" });
+    }
+    if (
+      !contactedEmail ||
+      typeof contactedEmail !== "string" ||
+      !emailValidator(contactedEmail)
+    ) {
+      errors.push({
+        field: "contactedEmail",
+        message: "Invalid contacted email",
+      });
+    }
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({ success: false, errors });
     }
 
     await createUser({
@@ -77,6 +110,9 @@ export default async function signup(req: Request, res: Response) {
       selectedLanguages,
       proficiencyLevel,
       learningInterests,
+      phoneNumber,
+      relationship,
+      contactedEmail,
     });
     return res
       .status(201)

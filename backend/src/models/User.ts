@@ -2,8 +2,8 @@ import { Document, model, Schema, Types } from "mongoose";
 enum UserRole {
   STUDENT = "student",
   INSTRUCTOR = "instructor",
-  PARENT = "parent",
   GUARDIAN = "guardian",
+  ADMIN = "admin",
 }
 interface UserDocument extends Document {
   firstName: string;

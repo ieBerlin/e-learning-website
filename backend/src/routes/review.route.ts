@@ -7,9 +7,9 @@ import deleteReview from "../controllers/review/deleteReview";
 
 const router = Router();
 
-router.post("/", createReview);
 router.get("/", getAllReviews);
 router.get("/:reviewId", getReviewById);
+router.post("/", createReview);
 router.put("/:reviewId", updateReview);
 router.delete("/:reviewId", deleteReview);
 

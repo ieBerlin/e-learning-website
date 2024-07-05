@@ -1,9 +1,7 @@
-// controllers/course/getAllCourses.ts
-
 import { Request, Response } from "express";
 import Course, { ICourse } from "../../models/Course";
 
-const getAllCourses = async (req: Request, res: Response) => {
+const getAllCourses = async (_, res: Response) => {
   try {
     const courses: ICourse[] = await Course.find();
     res.status(200).json({ success: true, courses });

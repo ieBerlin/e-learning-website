@@ -1,8 +1,9 @@
+import Admin from "../models/Admin";
+import Guardian from "../models/Guardian";
 import Instructor from "../models/Instructor";
 import Student from "../models/Student";
 import User from "../models/User";
-import { Response } from "express";
-const bcrypt = require("bcrypt");
+import bcrypt from 'bcrypt';
 const saltRounds = 10;
 
 export interface UserData {
@@ -17,6 +18,9 @@ export interface UserData {
   selectedLanguages?: string[];
   proficiencyLevel?: string;
   learningInterests?: string[];
+  phoneNumber?: number;
+  relationship?: string;
+  contactedEmail?: string;
 }
 export async function doesUserExist(email: string): Promise<boolean> {
   try {
@@ -40,6 +44,9 @@ export async function createUser(userData: UserData) {
     selectedLanguages,
     proficiencyLevel,
     learningInterests,
+    phoneNumber,
+    relationship,
+    contactedEmail,
   } = userData;
 
   try {
@@ -53,15 +60,26 @@ export async function createUser(userData: UserData) {
     });
     switch (role) {
       case "instructor":
-        await Instructor.create({ bio, expertise, userId: newUser._id });
+        return await Instructor.create({ userId: newUser._id, bio, expertise });
+      case "admin":
+        return await Admin.create({ userId: newUser._id });
+      case "guardian":
+        return await Guardian.create({
+          userId: newUser._id,
+          phoneNumber,
+          relationship,
+          contactedEmail,
+          selectedLanguages,
+          proficiencyLevel,
+          learningInterests,
+        });
       case "student":
-        await Student.create({
+        return await Student.create({
           userId: newUser._id,
           selectedLanguages,
           proficiencyLevel,
           learningInterests,
         });
-        break;
     }
 
     return newUser;

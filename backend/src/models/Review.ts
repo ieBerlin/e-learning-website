@@ -21,6 +21,6 @@ const ReviewSchema: Schema = new Schema<IReview>(
   }
 );
 
-const Review = model<IReview>("Review", ReviewSchema);
+const Review = model<IReview>("Review", ReviewSchema,'Reviews');
 
 export default Review;

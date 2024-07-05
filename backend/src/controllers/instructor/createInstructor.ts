@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Instructor from "../../models/Instructor";
+import ValidationError from "../../utils/ValidationError";
 interface IErrors {
   userId?: string;
   bio?: string;
@@ -10,16 +11,16 @@ interface IErrors {
 const createInstructor = async (req: Request, res: Response) => {
   try {
     const { userId, bio, experience, courses } = req.body;
-    let errors: IErrors = {};
+    const errors: ValidationError[] = [];
 
-    if (!userId) {
-      errors.userId = "User ID is required!";
+    if (!userId || typeof userId !== "string") {
+      errors.push({ field: "userId", message: "User ID is required!" });
     }
-    if (!bio) {
-      errors.bio = "Bio is required!";
+    if (!bio || typeof bio !== "string") {
+      errors.push({ field: "bio", message: "Bio is required!" });
     }
-    if (!experience) {
-      errors.experience = "Experience is required!";
+    if (!experience || typeof experience !== "string") {
+      errors.push({ field: "experience", message: "Experience is required!" });
     }
     if (Object.keys(errors).length > 0) {
       return res.status(400).json({ success: false, errors });

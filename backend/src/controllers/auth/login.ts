@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { emailValidator, passwordValidator } from "../../utils/validators";
 import bcrypt from "bcrypt";
 import { signJwt } from "../../utils/jwt.utils";
+import ValidationError from "../../utils/ValidationError";
 
 interface LoginErrors {
   email?: string;
@@ -11,17 +12,23 @@ interface LoginErrors {
 
 export default async function login(req: Request, res: Response) {
   const { email, password } = req.body;
-  let errors: LoginErrors = {};
+  const errors: ValidationError[] = [];
 
-  if (!email || !emailValidator(email)) {
-    errors.email = "Valid email is required!";
+  if (!email || typeof email !== "string" || !emailValidator(email)) {
+    errors.push({ field: "email", message: "Valid email is required!" });
   }
-  if (!password || !passwordValidator(password)) {
-    errors.password = "Password must be at least 6 characters long!";
+  if (
+    !password ||
+    typeof password !== "string" ||
+    !passwordValidator(password)
+  ) {
+    errors.push({
+      field: "password",
+      message: "Password must be at least 6 characters long!",
+    });
   }
-
   if (Object.keys(errors).length > 0) {
-    return res.status(400).json({success: false,errors});
+    return res.status(400).json({ success: false, errors });
   }
 
   try {
