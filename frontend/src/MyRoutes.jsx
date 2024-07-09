@@ -1,14 +1,24 @@
 import { createBrowserRouter } from "react-router-dom";
-import AuthPage from "./pages/AuthPage";
-import LandingPage from "./pages/LandingPage";
+import LandingPage from "./pages/landing-page/LandingPage";
+import AuthPage from "./pages/auth/AuthPage";
+import LearningPreferencesPage from "./pages/auth/LearningPreferencesPage";
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage />,
-  },
-  {
-    path: "/auth",
-    element: <AuthPage />,
+    children: [
+      {
+        index: true,
+        element: <LandingPage />,
+      },
+      {
+        path: "/auth",
+        element: <AuthPage />,
+      },
+      {
+        path: "learning-preferences",
+        element: <LearningPreferencesPage />,
+      },
+    ],
   },
 ]);
 export default routes;

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import heroSectionPic from "../assets/heroSectionPic.png";
+import heroSectionPic from "../../assets/heroSectionPic.png";
 import { AnimatePresence, motion } from "framer-motion";
 import "./LandingPage.css";
 
@@ -113,12 +113,18 @@ export default function LandingPage() {
               exit="hidden"
               className="flex gap-4 pr-4 items-center justify-end h-full"
             >
-              <button className="p-2 rounded-md bg-red-500 text-white text-md font-semibold hover:bg-coral-red">
-                Login
-              </button>
-              <button className=" text-coral-red text-md font-semibold ">
-                Signup
-              </button>
+              <div className="flex gap-4  items-center">
+                <a href="/auth?mode=login" className="flex-1">
+                  <button className="p-2 rounded-md bg-red-500 text-white text-md font-semibold hover:bg-coral-red">
+                    Login
+                  </button>
+                </a>
+                <a href="/auth?mode=signup" className="flex-1">
+                  <button className="text-coral-red text-md font-semibold">
+                    Signup
+                  </button>
+                </a>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -141,15 +147,19 @@ export default function LandingPage() {
             <h1 className="text-center text-2xl font-bold text-gray-700 py-2">
               Explore the world through language adventures!
             </h1>
-            <button className="uppercase py-2 w-2/3 rounded-md bg-red-500 text-white text-xl font-semibold hover:bg-coral-red">
-              Get Started
-            </button>
-            <button
-              ref={signupButtonRef}
-              className="uppercase py-2 w-2/3 rounded-md border-2 border-gray-300 text-lime-500 hover:text-lime-400 text-md font-semibold"
-            >
-              I already have an account
-            </button>
+            <a href="/auth?mode=signup" className="w-2/3">
+              <button className="text-nowrap uppercase py-2 w-full rounded-md bg-red-500 text-white text-xl font-semibold hover:bg-coral-red">
+                Get Started
+              </button>
+            </a>
+            <a href="/auth?mode=login" className="w-2/3">
+              <button
+                ref={signupButtonRef}
+                className="uppercase py-2 w-full rounded-md border-2 border-gray-300 text-lime-500 hover:text-lime-400 text-md font-semibold"
+              >
+                I already have an account
+              </button>
+            </a>
           </div>
         </div>
       </section>
