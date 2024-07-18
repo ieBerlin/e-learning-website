@@ -3,6 +3,7 @@ import proficiencyLevels from "../../data/proficiencyLevels";
 
 import { motion } from "framer-motion";
 import ProcessingIndicator from "../../components/ProcessingIndicator";
+import Card from "../../components/Card";
 export default function ProficiencyLevel({ onConfirm }) {
   const [currentSelectProficiencyLevel, setCurrentSelectProficiencyLevel] =
     useState(null);
@@ -16,7 +17,7 @@ export default function ProficiencyLevel({ onConfirm }) {
       }
     });
   }
-
+  console.log(currentSelectProficiencyLevel);
   const buttonStyles = currentSelectProficiencyLevel
     ? {
         borderColor: "#a7f3d0",
@@ -38,7 +39,7 @@ export default function ProficiencyLevel({ onConfirm }) {
         transition={{
           type: "spring",
         }}
-        className="text-gray-800 font-bold text-center text-3xl"
+        className="text-gray-800 font-bold text-center sm:text-lg md:text-xl lg:text:2xl"
       >
         My Proficiency is ...
       </motion.h2>
@@ -71,19 +72,34 @@ export default function ProficiencyLevel({ onConfirm }) {
             }}
             key={proficiencyLevel.id}
           >
-            <ProficiencyLevelComponent
+            <Card
               isLoading={isLoading}
               isSelected={
                 currentSelectProficiencyLevel === proficiencyLevel.name
               }
-              onSelectProficiencyLevel={handleSelectProficiencyLevel}
-              {...proficiencyLevel}
+              icon={proficiencyLevel.icon}
+              name={proficiencyLevel.name}
+              onSelectLanguage={() =>
+                handleSelectProficiencyLevel(proficiencyLevel.name)
+              }
             />
           </motion.li>
         ))}
       </motion.ul>
 
-      <button
+      <motion.button
+        initial={{
+          opacity: 0,
+          x: 30,
+        }}
+        animate={{
+          x: 0,
+          opacity: 1,
+        }}
+        exit={{
+          opacity: 0,
+          x: 30,
+        }}
         onClick={() => onConfirm(currentSelectProficiencyLevel)}
         disabled={isLoading}
         style={buttonStyles}
@@ -96,7 +112,7 @@ export default function ProficiencyLevel({ onConfirm }) {
         ) : (
           "Next"
         )}
-      </button>
+      </motion.button>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import heroSectionPic from "../../assets/heroSectionPic.png";
 import { AnimatePresence, motion } from "framer-motion";
 import "./LandingPage.css";
+import { features } from "./../../data/features";
 
 export default function LandingPage() {
   const [currentScrollY, setCurrentScrollY] = useState(window.scrollY);
@@ -36,51 +37,7 @@ export default function LandingPage() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  const features = [
-    {
-      id: 1,
-      title: "Interactive Lessons",
-      description:
-        "Engage with fun and interactive lessons designed to make learning enjoyable.",
-      icon: "/path/to/interactive-lessons-icon.png",
-    },
-    {
-      id: 2,
-      title: "Educational Games",
-      description:
-        "Learn through a variety of educational games that reinforce language skills.",
-      icon: "/path/to/educational-games-icon.png",
-    },
-    {
-      id: 3,
-      title: "Progress Tracking",
-      description:
-        "Track your progress and see how much you've improved over time.",
-      icon: "/path/to/progress-tracking-icon.png",
-    },
-    {
-      id: 4,
-      title: "Voice Recognition",
-      description:
-        "Practice speaking with voice recognition technology that helps improve pronunciation.",
-      icon: "/path/to/voice-recognition-icon.png",
-    },
-    {
-      id: 5,
-      title: "Cultural Insights",
-      description:
-        "Gain cultural insights to better understand the language and its nuances.",
-      icon: "/path/to/cultural-insights-icon.png",
-    },
-    {
-      id: 6,
-      title: "Rewards and Achievements",
-      description:
-        "Earn rewards and achievements as you complete lessons and reach milestones.",
-      icon: "/path/to/rewards-achievements-icon.png",
-    },
-  ];
+  console.log(isPassedBy);
 
   return (
     <div className="bg-gray-50">
@@ -89,7 +46,7 @@ export default function LandingPage() {
         id="header"
         style={{
           borderBottom:
-            currentScrollY > headerHeight ? "2px solid #d6d3d1" : undefined,
+            currentScrollY > headerHeight ? "1px solid #d6d3d1" : undefined,
         }}
       >
         <div className="py-2">
@@ -144,32 +101,43 @@ export default function LandingPage() {
         </div>
         <div className="w-full">
           <div className="w-4/5 flex flex-col items-center justify-start gap-3 p-2">
-            <h1 className="text-center text-2xl font-bold text-gray-700 py-2">
+            <h1 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold text-gray-700 py-2">
               Explore the world through language adventures!
             </h1>
-            <a href="/auth?mode=signup" className="w-2/3">
-              <button className="text-nowrap uppercase py-2 w-full rounded-md bg-red-500 text-white text-xl font-semibold hover:bg-coral-red">
-                Get Started
-              </button>
-            </a>
-            <a href="/auth?mode=login" className="w-2/3">
-              <button
-                ref={signupButtonRef}
-                className="uppercase py-2 w-full rounded-md border-2 border-gray-300 text-lime-500 hover:text-lime-400 text-md font-semibold"
+            <div
+              ref={signupButtonRef}
+              className="flex flex-col items-center justify-center gap-2"
+            >
+              <a href="/auth?mode=signup" className="w-full">
+                <button className="uppercase py-3 w-full rounded-md bg-red-500 text-white text-md md:text-lg font-semibold hover:bg-coral-red">
+                  Get Started
+                </button>
+              </a>
+              <a
+                href="/auth?mode=login"
+                className="w-full"
               >
-                I already have an account
-              </button>
-            </a>
+                <button className="uppercase p-2 w-full rounded-md border-2 border-gray-200 hover:border-gray-300 text-center text-lime-500 hover:text-lime-400 text-md md:text-lg font-semibold">
+                  I already have an account
+                </button>
+              </a>
+            </div>
           </div>
         </div>
       </section>
+      {/**/}
+      <section className="my-10 bg-gray-800 py-2 md:py-4 lg:py-6 ">
+        <h2 className="text-white text-center text-2xl md:text-3xl lg:text-5xl font-semibold">
+          Learn, Practice, Proof.
+        </h2>
+      </section>
       {/* Feature Section */}
-      <section className="my-3">
+      <section className="my-10">
         <ul>
           {features.map((feature, index) => (
             <li
               key={feature.id}
-              className="w-full grid items-center flex-col-reverse grid-cols-2 py-5"
+              className="w-full grid items-center grid-cols-2 py-5"
             >
               {index % 2 === 0 ? (
                 <>
@@ -177,11 +145,17 @@ export default function LandingPage() {
                     title={feature.title}
                     description={feature.description}
                   />
-                  <FeatureImage styles={{ marginRight: "auto" }} />
+                  <FeatureImage
+                    styles={{ marginRight: "auto", marginLeft: "auto" }}
+                    imageSrc={feature.icon}
+                  />
                 </>
               ) : (
                 <>
-                  <FeatureImage styles={{ marginLeft: "auto" }} />{" "}
+                  <FeatureImage
+                    styles={{ marginLeft: "auto" }}
+                    imageSrc={feature.icon}
+                  />{" "}
                   <FeatureText
                     title={feature.title}
                     description={feature.description}
@@ -192,25 +166,84 @@ export default function LandingPage() {
           ))}
         </ul>
       </section>
+      {/*Courses */}
+      <section className="my-10 px-10">
+        <h2 className="text-gray-700 text-xl font-semibold mb-6">
+          Popular Quasars Courses & Training
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          {/* Replace 'md:grid-cols-4' with the number of columns you desire for larger screens */}
+          <CourseCard />
+          <CourseCard />
+          <CourseCard />
+          <CourseCard />
+        </div>
+      </section>
+      <section className="my-20 px-10">
+        <h2 className="text-gray-700 text-xl font-semibold mb-6">
+          New Quasars Courses & Training
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          {/* Adjust 'md:grid-cols-3' based on the number of columns for larger screens */}
+          <CourseCard />
+          <CourseCard />
+          <CourseCard />
+        </div>
+      </section>
+      {/* Footer */}
+      <footer className="bg-gray-950 py-4">
+        <h2 className="font-semibold text-xl text-white text-center">
+          Quasars, Inc. &#169; 2024
+        </h2>
+      </footer>
     </div>
   );
 }
 function FeatureText({ title, description }) {
   return (
-    <div className="">
-      <h1 className="mx-auto text-center w-3/5 font-bold text-emerald-700 text-xl tracking-wide ">
+    <div className="w-4/5 lg:w-3/5  mx-auto">
+      <h1 className="text-center font-bold text-emerald-700 text-xl tracking-wide mb-4">
         {title}
       </h1>
-      <p className="mx-auto text-center w-3/5 text-gray-800 font-semibold">
-        {description}
-      </p>
+      <p className="text-center text-gray-800 font-semibold">{description}</p>
     </div>
   );
 }
-function FeatureImage({ styles }) {
+
+function FeatureImage({ styles, imageSrc }) {
   return (
     <div>
-      <img className="w-4/5" style={styles} src={heroSectionPic} alt="" />
+      <img className="w-3/5" style={styles} src={imageSrc} alt="" />
+    </div>
+  );
+}
+function CourseCard() {
+  return (
+    <div className="rounded-md border border-gray-300 hover:border-gray-500 overflow-hidden">
+      <img
+        className="object-cover rounded-t-md w-full h-48 sm:h-56 md:h-64"
+        src="https://upload.wikimedia.org/wikipedia/en/b/be/Flag_of_England.svg"
+        alt=""
+      />
+      <div className="bg-gray-800 p-3">
+        <div className="flex flex-row gap-2 justify-center items-center mb-2">
+          <h2 className="inline-block rounded-lg px-2 py-1 text-white bg-black text-sm sm:text-base">
+            12:30
+          </h2>
+          <h2 className="inline-block rounded-lg px-2 py-1 text-white bg-black text-sm sm:text-base">
+            8 Sections
+          </h2>
+        </div>
+        <h1 className="text-white text-xl sm:text-2xl font-semibold">
+          Learn English in 3 basics ways
+        </h1>
+        <p className="text-gray-400 font-medium line-clamp-3 text-sm sm:text-base">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum,
+          voluptatibus consequatur quae possimus suscipit quo accusamus enim
+          commodi aliquid velit ipsam rerum reiciendis accusantium provident
+          ducimus repellendus eos vitae. Vitae!
+        </p>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,42 @@
+export const cartCourses = [
+    {
+      id: 1,
+      name: "JavaScript Basics",
+      price: 49.99,
+      instructor: "John Doe",
+      title: "Learn the fundamentals of JavaScript",
+      image: "javascript-basics.jpg",
+    },
+    {
+      id: 2,
+      name: "Advanced React",
+      price: 99.99,
+      instructor: "Jane Smith",
+      title: "Deep dive into React development",
+      image: "advanced-react.jpg",
+    },
+    {
+      id: 3,
+      name: "Python for Data Science",
+      price: 79.99,
+      instructor: "Emily Johnson",
+      title: "Master Python for data analysis",
+      image: "python-data-science.jpg",
+    },
+    {
+      id: 4,
+      name: "Machine Learning A-Z",
+      price: 129.99,
+      instructor: "Michael Brown",
+      title: "Comprehensive guide to Machine Learning",
+      image: "machine-learning-az.jpg",
+    },
+    {
+      id: 5,
+      name: "Web Development Bootcamp",
+      price: 199.99,
+      instructor: "Sarah Davis",
+      title: "Become a full-stack web developer",
+      image: "web-development-bootcamp.jpg",
+    },
+  ]

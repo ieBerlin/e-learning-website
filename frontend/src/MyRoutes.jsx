@@ -1,24 +1,93 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LandingPage from "./pages/landing-page/LandingPage";
 import AuthPage from "./pages/auth/AuthPage";
 import LearningPreferencesPage from "./pages/auth/LearningPreferencesPage";
-const routes = createBrowserRouter([
+import UserProfilePage from "./pages/user/UserProfilePage";
+import UploadImagePage from "./pages/user/UploadImagePage";
+import NotificationSettingsPage from "./pages/user/NotificationSettingsPage";
+import SettingsPage from "./pages/user/SettingsPage.jsx";
+import ViewNotificationsPage from "./pages/user/ViewNotificationsPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import CartPage from "./pages/courses/CartPage";
+import AllCoursesPage from "./pages/courses/AllCoursesPage";
+import WishlistPage from "./pages/courses/WishlistPage";
+import RootLayout from "./components/RootLayout.jsx";
+import NavigationLayout from "./components/NavigationLayout.jsx";
+// Define routes
+const router = createBrowserRouter([
   {
     path: "/",
+    element: <LandingPage />,
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: "auth",
+    element: <AuthPage />,
+  },
+  {
+    path: "preferences",
+    element: <LearningPreferencesPage />,
+  },
+
+  {
+    path: "user",
+    element: <RootLayout />,
+    children: [
+      {
+        path: "profile",
+        element: <NavigationLayout />,
+        children: [{ path: "", element: <UserProfilePage /> }],
+      },
+      {
+        path: "upload-image",
+        element: <NavigationLayout />,
+        children: [{ path: "", element: <UploadImagePage /> }],
+      },
+      {
+        path: "settings",
+        element: <NavigationLayout />,
+        children: [{ path: "", element: <SettingsPage /> }],
+      },
+      {
+        path: "notifications",
+        element: <NavigationLayout />,
+        children: [{ path: "", element: <NotificationSettingsPage /> }],
+      },
+      {
+        path: "view-notifications",
+        element: <NavigationLayout />,
+        children: [{ path: "", element: <ViewNotificationsPage /> }],
+      },
+      { path: "*", element: <NotFoundPage /> },
+    ],
+  },
+  {
+    path: "cart",
+    element: <RootLayout />,
     children: [
       {
         index: true,
-        element: <LandingPage />,
-      },
-      {
-        path: "/auth",
-        element: <AuthPage />,
-      },
-      {
-        path: "learning-preferences",
-        element: <LearningPreferencesPage />,
+        element: <CartPage />,
       },
     ],
   },
+  {
+    path: "courses",
+    element: <RootLayout />,
+    children: [
+      { path: "", element: <AllCoursesPage /> },
+      { path: "wishlist", element: <WishlistPage /> },
+      { path: "*", element: <NotFoundPage /> },
+    ],
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
+  },
 ]);
-export default routes;
+
+const AppRouter = () => {
+  return <RouterProvider router={router} />;
+};
+
+export default AppRouter;

@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import AuthForm from "./AuthForm";
 import { processLoginForm, processSignUpForm } from "../../utils/userService";
+import logoImage from "/icon.png";
 export default function AuthPage() {
   let [searchParams, setSearchParams] = useSearchParams();
   const [currentMode, setCurrentMode] = useState(
     searchParams.get("mode") || "login"
   );
-
+const isSubmitting = true 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,14 +41,28 @@ export default function AuthPage() {
 
   return (
     <div className="grid grid-cols-2 min-h-screen">
-      <div className="h-full bg-blue w-full flex bg-blue-500" />
+      <div className=" bg-rose-400 flex flex-col w-full items-center justify-center">
+        <div className="w-1/2">
+          <img src={logoImage} className="w-full" alt="" />
+          <h2 className="font-semibold text-xl text-center text-gray-950">
+            Unlock the full potential of your language learning experience.
+          </h2>
+          <p className="text-rose-950 font-semibold">
+            Ready to continue learning? Log in now!{" "}
+          </p>
+        </div>
+      </div>
       {currentMode !== "signup" ? (
         <AuthForm
+          isLoading={isSubmitting}
           isLoginMode
           onSubmitForm={(e) => handleSubmitForm(e, "login")}
         />
       ) : (
-        <AuthForm onSubmitForm={(e) => handleSubmitForm(e, "signup")} />
+        <AuthForm
+          isLoading={isSubmitting}
+          onSubmitForm={(e) => handleSubmitForm(e, "signup")}
+        />
       )}
     </div>
   );

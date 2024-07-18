@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import languages from "../../data/languages";
 import { motion } from "framer-motion";
 import ProcessingIndicator from "../../components/ProcessingIndicator";
+import Card from "../../components/Card";
 export default function LanguageSelection({ onConfirm }) {
   const [currentSelectLanguage, setCurrentSelectLanguage] = useState([]);
   const isLoading = false;
@@ -42,7 +43,7 @@ export default function LanguageSelection({ onConfirm }) {
           type: "spring",
           duration: 1,
         }}
-        className="text-gray-800 font-bold text-center text-3xl"
+        className="text-gray-800 font-bold text-center sm:text-lg md:text-xl lg:text:2xl"
       >
         I want to learn ...
       </motion.h2>
@@ -58,7 +59,7 @@ export default function LanguageSelection({ onConfirm }) {
             },
           },
         }}
-        className="grid grid-cols-3 gap-3"
+        className="grid gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 "
       >
         {languages.map((language) => (
           <motion.li
@@ -75,7 +76,7 @@ export default function LanguageSelection({ onConfirm }) {
             }}
             key={`language-${language.id}`}
           >
-            <LanguageCard
+            <Card
               isLoading={isLoading}
               isSelected={currentSelectLanguage.includes(language.name)}
               onSelectLanguage={handleSelectLanguage}
@@ -85,7 +86,19 @@ export default function LanguageSelection({ onConfirm }) {
         ))}
       </motion.ul>
 
-      <button
+      <motion.button
+        initial={{
+          opacity: 0,
+          x: 30,
+        }}
+        animate={{
+          x: 0,
+          opacity: 1,
+        }}
+        exit={{
+          opacity: 0,
+          x: 30,
+        }}
         onClick={() => onConfirm(currentSelectLanguage)}
         disabled={isLoading}
         style={buttonStyles}
@@ -98,64 +111,7 @@ export default function LanguageSelection({ onConfirm }) {
         ) : (
           "Next"
         )}
-      </button>
+      </motion.button>
     </div>
-  );
-}
-
-function LanguageCard({ name, icon, isLoading, isSelected, onSelectLanguage }) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const cardStyles = isLoading
-    ? {
-        borderColor: "#d1d5db",
-        backgroundColor: "#f3f4f6",
-      }
-    : isSelected
-    ? {
-        borderColor: "#4ade80",
-        backgroundColor: "#d1fae5",
-      }
-    : isHovered
-    ? {
-        borderColor: "#d1d5db",
-        backgroundColor: "#f3f4f6",
-      }
-    : {
-        borderColor: "#e5e7eb",
-        backgroundColor: "#f9fafb",
-      };
-
-  return (
-    <button
-      type="button"
-      onClick={(e) => {
-        if (isLoading) {
-          return e.preventDefault();
-        }
-        onSelectLanguage(name);
-      }}
-      onMouseEnter={(e) => {
-        if (isLoading) {
-          return e.preventDefault();
-        }
-        setIsHovered(true);
-      }}
-      onMouseLeave={(e) => {
-        if (isLoading) {
-          return e.preventDefault();
-        }
-        setIsHovered(false);
-      }}
-      className="h-40 w-40 border-2 rounded-lg flex flex-col items-center justify-center"
-      style={cardStyles}
-    >
-      <img
-        src={icon}
-        alt={`${name} flag`}
-        className="h-20 w-20 object-contain rounded-md"
-      />
-      <h1 className="text-gray-600 mt-2 font-medium">{name}</h1>
-    </button>
   );
 }
