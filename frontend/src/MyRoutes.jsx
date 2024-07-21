@@ -55,8 +55,7 @@ const router = createBrowserRouter([
       },
       {
         path: "view-notifications",
-        element: <NavigationLayout />,
-        children: [{ path: "", element: <ViewNotificationsPage /> }],
+        element: <ViewNotificationsPage />,
       },
       { path: "*", element: <NotFoundPage /> },
     ],

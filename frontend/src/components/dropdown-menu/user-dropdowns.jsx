@@ -1,6 +1,7 @@
 import { cartCourses } from "../../dummy_data/cartCourses";
-import { notifications } from "./../../dummy_data/notfiications";
+import { notifications } from "./../../dummy_data/notifications";
 import { formatDate } from "./../../utils/formatDate";
+import DropdownItem from "./DropdownItem";
 
 export function Cart({ label }) {
   return (
@@ -38,8 +39,8 @@ export function Cart({ label }) {
 }
 export function NotificationDropDown() {
   return (
-    <div className="bg-white py-2 rounded-md">
-      <h2 className="text-gray-800 font-medium px-2 pb-1">Notifications</h2>
+    <div className="bg-white rounded-md">
+      <h2 className="text-indigo-700 px-2 py-1 bg-gray-300 font-semibold rounded-t-md">Notifications</h2>
       <ul className="bg-gray-50 p-2">
         {notifications.slice(0, 4).map((notification, index) => (
           <>
@@ -62,10 +63,37 @@ export function NotificationDropDown() {
                 {notification.message}
               </p>
             </li>
-            { index!== 3 && <hr />}
+            {index !== 3 && <hr />}
           </>
         ))}
       </ul>
+      <hr />
+      <a href="/user/view-notifications">
+        <button className="w-full text-center font-semibold text-gray-800 hover:text-gray-900 py-1 bg-gray-300 hover:bg-gray-200">
+          All Notifications
+        </button>
+      </a>
     </div>
+  );
+}
+export function UserDropDownMenu() {
+  return (
+    <>
+      <DropdownItem label="Profile" href="/user/profile" />
+      <DropdownItem label="Settings" href="/user/settings" />
+      <DropdownItem label="Notifications settings" href="/user/notifications" />
+      <DropdownItem label="My Learning" href="/courses/all-courses" />
+      <hr />
+      <form method="POST" action="#" onSubmit={(e) => e.preventDefault()}>
+        <button
+          type="submit"
+          className="block w-full px-4 py-2 text-left text-sm text-gray-700 font-medium hover:text-white hover:bg-indigo-500 rounded-md"
+          role="menuitem"
+          id="menu-item-3"
+        >
+          Logout
+        </button>
+      </form>
+    </>
   );
 }

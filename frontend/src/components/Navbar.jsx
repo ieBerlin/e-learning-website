@@ -7,8 +7,11 @@ import {
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import DropdownMenu from "./dropdown-menu/DropdownMenu";
-import DropdownItem from "./dropdown-menu/DropdownItem";
-import { Cart, NotificationDropDown } from "./dropdown-menu/user-dropdowns";
+import {
+  Cart,
+  NotificationDropDown,
+  UserDropDownMenu,
+} from "./dropdown-menu/user-dropdowns";
 // eslint-disable-next-line react/display-name
 const Navbar = forwardRef((props, ref) => {
   return (
@@ -34,29 +37,7 @@ const Navbar = forwardRef((props, ref) => {
         />
         <DropdownMenu
           label=<div className="w-6 h-6 bg-red-400 rounded-full" />
-          content={
-            <>
-              <DropdownItem label="Profile" href="/user/profile" />
-              <DropdownItem label="Settings" href="/user/settings" />
-              <DropdownItem label="Notifications settings" href="/user/notifications" />
-              <DropdownItem label="My Learning" href="/courses/all-courses" />
-              <hr />
-              <form
-                method="POST"
-                action="#"
-                onSubmit={(e) => e.preventDefault()}
-              >
-                <button
-                  type="submit"
-                  className="block w-full px-4 py-2 text-left text-sm text-gray-700 font-medium hover:text-white hover:bg-indigo-500 rounded-md"
-                  role="menuitem"
-                  id="menu-item-3"
-                >
-                  Logout
-                </button>
-              </form>
-            </>
-          }
+          content={<UserDropDownMenu />}
         />
       </div>
     </nav>

@@ -1,3 +1,10 @@
-export default function AllCoursesPage(){
-    return <h1>Hello World!</h1>
+import PageTemplate from "../../components/PageTemplate";
+import CoursesTabs from "./../../components/CoursesTabs";
+
+export default function AllCoursesPage() {
+  return (
+    <PageTemplate title="My Courses">
+      <CoursesTabs />
+    </PageTemplate>
+  );
 }

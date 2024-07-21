@@ -1,3 +1,10 @@
-export default function WishlistPage(){
-    return <h1>Hello World!</h1>
+import CoursesTabs from "../../components/CoursesTabs";
+import PageTemplate from "../../components/PageTemplate";
+
+export default function WishlistPage() {
+  return (
+    <PageTemplate title="My Wishlist">
+      <CoursesTabs />
+    </PageTemplate>
+  );
 }
