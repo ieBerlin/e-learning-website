@@ -3,6 +3,7 @@ import heroSectionPic from "../../assets/heroSectionPic.png";
 import { AnimatePresence, motion } from "framer-motion";
 import "./LandingPage.css";
 import { features } from "./../../data/features";
+import Footer from "./../../components/Footer";
 
 export default function LandingPage() {
   const [currentScrollY, setCurrentScrollY] = useState(window.scrollY);
@@ -113,10 +114,7 @@ export default function LandingPage() {
                   Get Started
                 </button>
               </a>
-              <a
-                href="/auth?mode=login"
-                className="w-full"
-              >
+              <a href="/auth?mode=login" className="w-full">
                 <button className="uppercase p-2 w-full rounded-md border-2 border-gray-200 hover:border-gray-300 text-center text-lime-500 hover:text-lime-400 text-md md:text-lg font-semibold">
                   I already have an account
                 </button>
@@ -191,11 +189,7 @@ export default function LandingPage() {
         </div>
       </section>
       {/* Footer */}
-      <footer className="bg-gray-950 py-4">
-        <h2 className="font-semibold text-xl text-white text-center">
-          Quasars, Inc. &#169; 2024
-        </h2>
-      </footer>
+      <Footer />
     </div>
   );
 }

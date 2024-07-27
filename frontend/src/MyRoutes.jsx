@@ -10,9 +10,10 @@ import ViewNotificationsPage from "./pages/user/ViewNotificationsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import CartPage from "./pages/courses/CartPage";
 import AllCoursesPage from "./pages/courses/AllCoursesPage";
-import WishlistPage from "./pages/courses/WishlistPage";
+import LibraryPage from "./pages/courses/LibraryPage.jsx";
 import RootLayout from "./components/RootLayout.jsx";
 import NavigationLayout from "./components/NavigationLayout.jsx";
+import CourseCategoryPage from "./pages/courses/CourseCategoryPage.jsx";
 // Define routes
 const router = createBrowserRouter([
   {
@@ -75,7 +76,8 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { path: "", element: <AllCoursesPage /> },
-      { path: "wishlist", element: <WishlistPage /> },
+      { path: "my-library", element: <LibraryPage /> },
+      { path: ":category", element: <CourseCategoryPage /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },

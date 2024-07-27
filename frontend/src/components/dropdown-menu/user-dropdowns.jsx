@@ -1,4 +1,8 @@
+import { useDispatch } from "react-redux";
 import { cartCourses } from "../../dummy_data/cartCourses";
+import { openModal } from "../../features/modal/modalSlice";
+import Modal from "../modal/Modal";
+import { LogoutBodyContent } from "../modal/ModalContents";
 import { notifications } from "./../../dummy_data/notifications";
 import { formatDate } from "./../../utils/formatDate";
 import DropdownItem from "./DropdownItem";
@@ -40,7 +44,9 @@ export function Cart({ label }) {
 export function NotificationDropDown() {
   return (
     <div className="bg-white rounded-md">
-      <h2 className="text-indigo-700 px-2 py-1 bg-gray-300 font-semibold rounded-t-md">Notifications</h2>
+      <h2 className="text-indigo-700 px-2 py-1 bg-gray-300 font-semibold rounded-t-md">
+        Notifications
+      </h2>
       <ul className="bg-gray-50 p-2">
         {notifications.slice(0, 4).map((notification, index) => (
           <>
@@ -77,6 +83,7 @@ export function NotificationDropDown() {
   );
 }
 export function UserDropDownMenu() {
+  const dispatch = useDispatch()
   return (
     <>
       <DropdownItem label="Profile" href="/user/profile" />
@@ -84,16 +91,14 @@ export function UserDropDownMenu() {
       <DropdownItem label="Notifications settings" href="/user/notifications" />
       <DropdownItem label="My Learning" href="/courses/all-courses" />
       <hr />
-      <form method="POST" action="#" onSubmit={(e) => e.preventDefault()}>
         <button
-          type="submit"
+        onClick={()=>dispatch(openModal())}
           className="block w-full px-4 py-2 text-left text-sm text-gray-700 font-medium hover:text-white hover:bg-indigo-500 rounded-md"
           role="menuitem"
           id="menu-item-3"
         >
           Logout
         </button>
-      </form>
     </>
   );
 }

@@ -17,7 +17,7 @@ const Navbar = forwardRef((props, ref) => {
   return (
     <nav
       ref={ref}
-      className="w-full fixed top-0 bg-blue-200 flex flex-row justify-between items-center shadow-md"
+      className="w-full fixed top-0 bg-blue-200 flex flex-row justify-between items-center shadow-md z-[9999]"
     >
       <Link to="/">
         <img className="w-14 ml-4" src={logoImage} alt="" />
