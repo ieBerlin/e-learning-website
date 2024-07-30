@@ -14,6 +14,9 @@ import LibraryPage from "./pages/courses/LibraryPage.jsx";
 import RootLayout from "./components/RootLayout.jsx";
 import NavigationLayout from "./components/NavigationLayout.jsx";
 import CourseCategoryPage from "./pages/courses/CourseCategoryPage.jsx";
+import CourseDetailPage from "./pages/courses/CourseDetailPage.jsx";
+import SearchPage from "./pages/courses/SearchPage.jsx";
+
 // Define routes
 const router = createBrowserRouter([
   {
@@ -76,8 +79,11 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { path: "", element: <AllCoursesPage /> },
+      { path: "search", element: <SearchPage /> },
       { path: "my-library", element: <LibraryPage /> },
-      { path: ":category", element: <CourseCategoryPage /> },
+      { path: "category", element: <CourseCategoryPage /> },
+
+      { path: ":courseId", element: <CourseDetailPage /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },

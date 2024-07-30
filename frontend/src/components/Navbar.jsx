@@ -12,16 +12,23 @@ import {
   NotificationDropDown,
   UserDropDownMenu,
 } from "./dropdown-menu/user-dropdowns";
+import SearchInput from "./SearchInput";
 // eslint-disable-next-line react/display-name
 const Navbar = forwardRef((props, ref) => {
   return (
     <nav
       ref={ref}
-      className="w-full fixed top-0 bg-blue-200 flex flex-row justify-between items-center shadow-md z-[9999]"
+      className="gap-3 w-full fixed top-0 bg-blue-600 flex flex-row justify-between items-center shadow-md z-[9999]"
     >
       <Link to="/">
-        <img className="w-14 ml-4" src={logoImage} alt="" />
+        <div className=" w-14 ml-4">
+          <img className="" src={logoImage} alt="" />
+        </div>
       </Link>
+      <Link to="">
+        <h2 className="text-gray-900 font-semibold text-base">Categories</h2>
+      </Link>
+      <SearchInput />
       <div className="flex flex-row gap-3 items-center p-4">
         <DropdownMenu
           label={<HeartIcon className="w-6" />}

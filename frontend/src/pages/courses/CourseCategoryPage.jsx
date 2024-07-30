@@ -1,31 +1,23 @@
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import PageTemplate from "../../components/PageTemplate";
 import Tabs from "../../components/Tabs";
 import { useState } from "react";
 import CourseItem from "./only-in-courses/CourseItem";
 import dummyCourses from "../../dummy_data/dummyCourses";
 import CarouselDefault from "../../components/Carousel";
-import FilterDropdowns from "./only-in-courses/FilterDropdowns";
 import LoadingIndicator from "../../components/LoadingIndicator";
 import ColoredStarIcon from "../../components/ColoredStarIcon";
 import instructors from "../../dummy_data/instructors";
 import { defaultFilterConfig } from "../../defaults/config";
-import Pagination from "../../components/Pagination";
 import TabItem from "../../components/TabItem";
+import SearchResultsSection from "../../components/SearchResultsSection";
 
 const CourseCategoryPage = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 10;
-  const pageSize = 10;
-  const totalResults = 97;
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
   const [filterConfig, setFilterConfig] = useState(defaultFilterConfig);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { category } = useParams();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const category = params.get("q");
   const isLoadingData = false;
   const [activeTab, setActiveTab] = useState(0);
 
@@ -139,40 +131,11 @@ const CourseCategoryPage = () => {
         </CarouselDefault>
       </section>
 
-      {/* Section: Filters and Courses */}
-      <section>
-        <div className="flex justify-between w-full items-center gap-1 mt-20 mb-5">
-          <h2 className="text-gray-700 w-fit inline-block font-semibold text-lg">
-            10,000 results
-          </h2>
-          <FilterDropdowns
-            handleSubmission={handleSubmission}
-            data={filterConfig}
-          />
-        </div>
-        <div>
-          <ul
-            className="grid gap-4 md:gap-6 lg:gap-8 justify-between"
-            style={{
-              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            }}
-          >
-            {dummyCourses.map((course, index) => (
-              <CourseItem key={index} {...course} />
-            ))}
-          </ul>
-        </div>
-      </section>
-      {/* Section: Pagination */}
-      <section className="mt-28">
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-          pageSize={pageSize}
-          totalResults={totalResults}
-        />
-      </section>
+      <SearchResultsSection
+        data={dummyCourses}
+        config={filterConfig}
+        onSubmit={handleSubmission}
+      />
     </PageTemplate>
   );
 };
