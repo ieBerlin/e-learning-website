@@ -6,7 +6,7 @@ import store from "./store/store";
 export default function App() {
   return (
     <Provider store={store}>
-    <MyRoutes />
+      <MyRoutes />
     </Provider>
   );
 }

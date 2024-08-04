@@ -1,9 +1,10 @@
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../features/modal/modalSlice";
 
-export function ActionButton({ label, isLoading }) {
+export function ActionButton({ label = "Save", isLoading, onConfirm }) {
   return (
     <button
+      onClick={onConfirm}
       className={`px-2 py-1 rounded-md font-medium text-md lg:text-lg ${
         isLoading
           ? "bg-gray-300 text-gray-700"
@@ -22,7 +23,7 @@ export function CancelButton({ isLoading }) {
       className={`px-2 py-1 rounded-md font-medium text-md lg:text-lg ${
         isLoading
           ? "bg-gray-300 text-gray-700"
-          : "bg-gray-400 hover:bg-gray-300 text-white hover:text-gray-600"
+          : "bg-gray-500 hover:bg-gray-400 text-white"
       }`}
     >
       Cancel

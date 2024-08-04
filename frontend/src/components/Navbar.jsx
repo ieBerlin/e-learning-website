@@ -18,7 +18,7 @@ const Navbar = forwardRef((props, ref) => {
   return (
     <nav
       ref={ref}
-      className="gap-3 w-full fixed top-0 bg-blue-600 flex flex-row justify-between items-center shadow-md z-[9999]"
+      className="gap-3 w-full fixed top-0 bg-blue-600 flex flex-row justify-between items-center shadow-md z-[9998]"
     >
       <Link to="/">
         <div className=" w-14 ml-4">

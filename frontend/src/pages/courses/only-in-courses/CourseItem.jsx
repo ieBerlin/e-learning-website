@@ -112,7 +112,7 @@ export default function CourseItem({
           onMouseLeave={() => handleMouseLeave("div")}
           className="bg-white border border-gray-300 hover:border-gray-400 rounded-t-md flex flex-col gap-2"
         >
-          <div className="relative w-full h-full">
+          <div className="relative w-full h-[150px]">
             <img
               src={imageUrl}
               className="object-cover w-full h-full rounded-md"

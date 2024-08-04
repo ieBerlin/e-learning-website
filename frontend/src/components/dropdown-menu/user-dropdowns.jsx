@@ -1,8 +1,6 @@
 import { useDispatch } from "react-redux";
 import { cartCourses } from "../../dummy_data/cartCourses";
 import { openModal } from "../../features/modal/modalSlice";
-import Modal from "../modal/Modal";
-import { LogoutBodyContent } from "../modal/ModalContents";
 import { notifications } from "./../../dummy_data/notifications";
 import { formatDate } from "./../../utils/formatDate";
 import DropdownItem from "./DropdownItem";
@@ -83,7 +81,7 @@ export function NotificationDropDown() {
   );
 }
 export function UserDropDownMenu() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   return (
     <>
       <DropdownItem label="Profile" href="/user/profile" />
@@ -91,14 +89,14 @@ export function UserDropDownMenu() {
       <DropdownItem label="Notifications settings" href="/user/notifications" />
       <DropdownItem label="My Learning" href="/courses/all-courses" />
       <hr />
-        <button
-        onClick={()=>dispatch(openModal())}
-          className="block w-full px-4 py-2 text-left text-sm text-gray-700 font-medium hover:text-white hover:bg-indigo-500 rounded-md"
-          role="menuitem"
-          id="menu-item-3"
-        >
-          Logout
-        </button>
+      <button
+        onClick={() => dispatch(openModal("logout-modal"))}
+        className="block w-full px-4 py-2 text-left text-sm text-gray-700 font-medium hover:text-white hover:bg-indigo-500 rounded-md"
+        role="menuitem"
+        id="menu-item-3"
+      >
+        Logout
+      </button>
     </>
   );
 }

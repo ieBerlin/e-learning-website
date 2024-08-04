@@ -49,7 +49,11 @@ const NotificationCategory = ({ title, notifications }) => {
                   </p>
                 </div>
               </div>
-              <button onClick={() => dispatch(openModal())}>
+              <button
+                onClick={() =>
+                  dispatch(openModal({ type: "delete-notification-modal" }))
+                }
+              >
                 <TrashIcon className="bg-gray-50 text-gray-600 hover:text-gray-500 w-[25px] h-[25px]" />
               </button>
             </div>
@@ -66,7 +70,7 @@ export default function ViewNotificationsPage() {
   const notifications = filterNotifications(notificationsItems);
   return (
     <PageTemplate title="View Notifications">
-      <Modal
+      {/* <Modal
         title="Delete notification"
         bodyContent={
           <h2>
@@ -78,7 +82,7 @@ export default function ViewNotificationsPage() {
           <ActionButton key="12" label="Save" />,
           <CancelButton />,
         ]}
-      />
+      /> */}
       {notifications.thisWeekNotifications.length > 0 && (
         <NotificationCategory
           title="Last 7 Days Notifications"
